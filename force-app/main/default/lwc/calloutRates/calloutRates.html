@@ -1,0 +1,63 @@
+<template>
+  <div style="max-width:768px">
+    <lightning-card title="Latest Exchange Rate" icon-name="standard:channel_program_history">
+      <div class="slds-m-vertical_medium slds-m-horizontal_x-large">
+        <lightning-layout horizontal-align="spread" vertical-align="end">
+          <lightning-layout-item>
+            <lightning-combobox name="base" label="Base Rate" value={baseSearchKey} options={allBaseRates} onchange={handleRateChange}>
+
+            </lightning-combobox>
+          </lightning-layout-item>
+          <lightning-layout-item>
+            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+              width="32.68px" height="32.68px" viewBox="0 0 32.68 32.68" style="enable-background:new 0 0 32.68 32.68;" xml:space="preserve">
+              <g>
+                <path d="M15.194,21.912v-3.51h-3.379v-1.562h3.021l-0.784-1.355h-2.236v-1.56h1.396l-1.78-3.159h2.4l2.407,4.727h0.065l2.474-4.727
+                  h2.477l-1.859,3.159h1.469v1.56H18.51l-0.814,1.355h3.168v1.562h-3.551v3.51H15.194z M16.34,5.34v-3
+                  c-7.721,0-14.001,6.281-14.001,14H0l3.839,5.225l3.84-5.225h-2.34C5.339,10.274,10.274,5.34,16.34,5.34z M28.841,11.115
+                  l-3.84,5.225h2.34c0,6.066-4.935,11-11.001,11v3c7.721,0,14.001-6.281,14.001-14h2.339L28.841,11.115z">
+                </path>
+              </g>
+            </svg>
+          </lightning-layout-item>
+          <lightning-layout-item>
+            <lightning-combobox name="target" label="Target Rate" value={targetSearchKey} options={allTargetRates} onchange={handleRateChange}>
+
+            </lightning-combobox>
+          </lightning-layout-item>
+        </lightning-layout>
+        <div class="slds-clearfix slds-var-p-vertical_small">
+          <div class="slds-float_right">
+            <lightning-button label="Get Latest Rates" onclick={handleRateClick}>
+
+            </lightning-button>
+          </div>
+        </div>
+        <template if:true={exRate}>
+          <p><b>Effective Date: </b> {exRate.baseDate}</p>
+          <div style="height:300px" class="slds-scrollable_y">
+            <table class="table table-striped slds-m-top_medium">
+              <thead>
+                <tr>
+                  <th>Target Currency</th>
+                  <th>Rate</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template for:each={exRate.targetRates} for:item="t">
+                  <tr key={t.CurrencyCode}>
+                    <td>{t.CurrencyCode}</td>
+                    <td>{t.Rate}</td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </template>      
+      </div>
+      <template if:true={error}>
+        <c-error-panel errors={error}></c-error-panel>
+      </template>
+    </lightning-card>
+  </div>
+</template>

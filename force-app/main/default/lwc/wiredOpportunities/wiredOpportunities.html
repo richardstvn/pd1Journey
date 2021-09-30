@@ -1,0 +1,34 @@
+<!-- sldsValidatorIgnore -->
+<template>
+  <div style="max-width:1200px;">
+    <lightning-card title="Opportunity Filter" icon-name="standard:opportunity">
+      <div class="slds-m-vertical_medium slds-m-horizontal_xx-large">
+        <lightning-layout vertical-align="end" class="slds-var-m-bottom_small">
+          <lightning-layout-item flexibility="grow">
+            <template if:true={allStagePicklist}>
+              <lightning-combobox name="stage" label="Stage" value={opptStage} options={allStagePicklist} onchange={handleStageChange}>
+
+              </lightning-combobox>
+            </template>
+          </lightning-layout-item>
+          <lightning-layout-item flexibility="grow">
+            <lightning-button label="Search" onclick={handleSearch}></lightning-button>
+          </lightning-layout-item>
+        </lightning-layout>
+        <template if:true={opportunities}>
+          <div class="slds-clearfix">
+            <div class="slds-float_right slds-text-body_small">{opptSize} items</div>
+          </div>
+          <div class="slds-var-m-top_large" style="height: 300px;">
+            <lightning-datatable key-field="Id" columns={opptColumns} data={opportunities} hide-checkbox-column>
+
+            </lightning-datatable>
+          </div>
+        </template>
+      </div>
+      <template if:true={error}>
+        <c-error-panel errors={error}></c-error-panel>
+      </template>
+    </lightning-card> 
+  </div>
+</template>
